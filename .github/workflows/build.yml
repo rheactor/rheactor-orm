@@ -1,0 +1,65 @@
+name: Build
+on: [push]
+jobs:
+  prettier:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 19
+
+      - run: npm ci
+      - run: npm run prettier
+
+  eslint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 19
+
+      - run: npm ci
+      - run: npm run eslint
+
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        databases:
+          - mariadb:10.10
+          - mariadb:10.6
+
+    services:
+      mariadb:
+        image: ${{ matrix.databases }}
+        ports:
+          - 3306:3306
+        env:
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_USER: user
+          MYSQL_PASSWORD: password
+          MYSQL_DATABASE: test
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 19
+
+      - run: npm ci
+      - run: npm run test
+        env:
+          TESTING_DATABASE: test
+          TESTING_USER: user
+          TESTING_PASSWORD: password
