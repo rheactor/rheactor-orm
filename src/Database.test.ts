@@ -32,4 +32,12 @@ describe("Database tests", () => {
     expect(result.insertId).toBe(0n);
     expect(result.warningStatus).toBe(0);
   });
+
+  test("escapers", () => {
+    expect(connection.escape("test")).toBe("'test'");
+    expect(connection.escape(123)).toBe("123");
+    expect(connection.escape(true)).toBe("true");
+    expect(connection.escape(false)).toBe("false");
+    expect(connection.escapeId("test")).toBe("`test`");
+  });
 });

@@ -64,6 +64,22 @@ export class Database {
   }
 
   /**
+   * Escapes query data.
+   * @example "WHERE id = ?
+   */
+  public escape(value: unknown) {
+    return this.connection.escape(value);
+  }
+
+  /**
+   * Escapes query identifier.
+   * @example "SELECT * FROM ?"
+   */
+  public escapeId(identifier: string) {
+    return this.connection.escapeId(identifier);
+  }
+
+  /**
    * Closes connection.
    */
   public close() {
