@@ -3,6 +3,7 @@ import { createPool } from "mariadb";
 
 import type { ExecuteResult } from "@/Meta/ExecuteResult";
 import type { SelectResult } from "@/Meta/SelectResult";
+import type { Column } from "@/Schema/Column";
 import type { ScalarNullable } from "@/Types";
 
 export interface DatabaseCreateConnectionOptions {
@@ -31,14 +32,34 @@ export interface DatabaseCreateConnectionOptions {
   database: string;
 }
 
-export class Database {
-  private constructor(private readonly connection: Pool) {}
+export interface DatabaseCreateTableOptions {
+  /** Table comment. */
+  comment?: string;
+}
 
-  /**
-   * Creates a new Database connection.
-   */
+interface InformationSchemaTable {
+  /** Table comment. */
+  table_comment: string;
+}
+
+export interface DatabaseTableSchema {
+  /** Table name. */
+  name: string;
+
+  /** Table comment. */
+  comment?: string;
+}
+
+export class Database {
+  private constructor(
+    public readonly options: DatabaseCreateConnectionOptions,
+    private readonly connection: Pool
+  ) {}
+
+  /** Creates a new Database connection. */
   public static createConnection(options: DatabaseCreateConnectionOptions) {
     return new Database(
+      options,
       createPool({
         host: "127.0.0.1",
         user: "root",
@@ -48,10 +69,11 @@ export class Database {
     );
   }
 
-  /**
-   * Run a SELECT query using current database connection.
-   */
-  public async querySelect<T extends object>(sql: string, values?: ScalarNullable[]): Promise<SelectResult<T>> {
+  /** Run a SELECT query using current database connection. */
+  public async querySelect<T extends object>(
+    sql: string,
+    values?: ScalarNullable[]
+  ): Promise<SelectResult<T>> {
     return this.connection.query(sql, values);
   }
 
@@ -59,7 +81,10 @@ export class Database {
    * Run a DML query using current database connection.
    * Example: INSERT, UPDATE and DELETE.
    */
-  public async queryExecute(sql: string, values?: ScalarNullable[]): Promise<ExecuteResult> {
+  public async queryExecute(
+    sql: string,
+    values?: ScalarNullable[]
+  ): Promise<ExecuteResult> {
     return this.connection.query(sql, values);
   }
 
@@ -79,9 +104,48 @@ export class Database {
     return this.connection.escapeId(identifier);
   }
 
-  /**
-   * Closes connection.
-   */
+  /** Creates a new Table. */
+  public async createTable(
+    name: string,
+    columns: Array<Column<object>>,
+    options?: DatabaseCreateTableOptions
+  ): Promise<void> {
+    this.connection.query(`
+      CREATE TABLE ${this.escapeId(name)}
+        ( ${columns.map((column) => column.asCreateSchema(this)).join(", ")} )
+      ENGINE = InnoDB
+      ${options?.comment ? `COMMENT = ${this.escape(options.comment)}` : ""}
+    `);
+  }
+
+  /** Drop an existing table. */
+  public async dropTable(name: string): Promise<void> {
+    this.connection.query(`DROP TABLE IF EXISTS ${this.escapeId(name)}`);
+  }
+
+  /** Get a Table schema from Information Schema. */
+  public async getTableSchema(name: string): Promise<DatabaseTableSchema> {
+    const tableSchema = await this.querySelect<InformationSchemaTable>(
+      `
+      SELECT table_comment
+      FROM information_schema.tables
+
+      WHERE
+        table_schema = ? AND
+        table_name = ?
+
+      LIMIT 1
+      `,
+      [this.options.database, name]
+    );
+
+    return {
+      name,
+      comment: tableSchema[0]!.table_comment,
+    };
+  }
+
+  /** Closes connection. */
   public close() {
     this.connection.end();
   }

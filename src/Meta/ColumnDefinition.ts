@@ -1,5 +1,5 @@
 // Reference: https://mariadb.com/kb/en/result-set-packets/#field-details-flag.
-export const enum ColumnFlag {
+export const enum ColumnDefinitionFlag {
   NOT_NULL = 1 << 0,
   PRIMARY_KEY = 1 << 1,
   UNIQUE_KEY = 1 << 2,
@@ -18,7 +18,7 @@ export const enum ColumnFlag {
 }
 
 // Reference: https://mariadb.com/kb/en/result-set-packets/#field-types.
-export const enum ColumnType {
+export const enum ColumnDefinitionType {
   DECIMAL = 0,
   TINY = 1,
   SHORT = 2,
@@ -59,15 +59,11 @@ export interface ColumnDefinition {
    */
   columnLength: number;
 
-  /**
-   * Column type.
-   */
-  columnType: ColumnType;
+  /** Column type. */
+  columnType: ColumnDefinitionType;
 
-  /**
-   * Column flags.
-   */
-  flags: ColumnFlag;
+  /** Column flags. */
+  flags: ColumnDefinitionFlag;
 
   /**
    * Column type scale.
