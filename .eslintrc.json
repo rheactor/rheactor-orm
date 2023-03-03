@@ -1,5 +1,5 @@
 {
-  "plugins": ["@typescript-eslint", "promise"],
+  "plugins": ["@typescript-eslint", "promise", "jest"],
 
   "extends": [
     "eslint:recommended",
@@ -41,8 +41,8 @@
     "no-caller": "warn",
     "no-console": "warn",
     "no-constant-binary-expression": "warn",
+    "no-constant-condition": ["warn", { "checkLoops": false }],
     "no-constructor-return": "warn",
-    "no-continue": "warn",
     "no-div-regex": "warn",
     "no-else-return": "warn",
     "no-empty-static-block": "warn",
@@ -136,7 +136,6 @@
     "prefer-const": "warn",
     "prefer-destructuring": "warn",
     "prefer-exponentiation-operator": "warn",
-    "prefer-named-capture-group": "warn",
     "prefer-numeric-literals": "warn",
     "prefer-object-has-own": "warn",
     "prefer-object-spread": "warn",
@@ -146,8 +145,6 @@
     "prefer-spread": "warn",
     "prefer-template": "warn",
     "require-atomic-updates": "warn",
-    "require-unicode-regexp": "warn",
-    "spaced-comment": "warn",
     "symbol-description": "warn",
     "yield-star-spacing": "warn",
     "camelcase": "warn",
@@ -163,7 +160,10 @@
       "warn",
       { "fixMixedExportsWithInlineTypeSpecifier": false }
     ],
-    "@typescript-eslint/consistent-type-imports": ["warn"],
+    "@typescript-eslint/consistent-type-imports": [
+      "warn",
+      { "fixStyle": "inline-type-imports" }
+    ],
     "@typescript-eslint/default-param-last": "warn",
     "@typescript-eslint/explicit-member-accessibility": "warn",
     "@typescript-eslint/member-ordering": "warn",
@@ -180,6 +180,10 @@
     "@typescript-eslint/no-redundant-type-constituents": "warn",
     "@typescript-eslint/no-require-imports": "warn",
     "@typescript-eslint/no-shadow": "warn",
+    "@typescript-eslint/no-unnecessary-condition": [
+      "warn",
+      { "allowConstantLoopConditions": true }
+    ],
     "@typescript-eslint/no-unnecessary-qualifier": "warn",
     "@typescript-eslint/no-unused-expressions": "warn",
     "@typescript-eslint/no-unused-vars": [
@@ -199,42 +203,15 @@
     ],
     "@typescript-eslint/return-await": "warn",
     "@typescript-eslint/sort-type-constituents": "warn",
-    "@typescript-eslint/switch-exhaustiveness-check": "warn"
+    "@typescript-eslint/switch-exhaustiveness-check": "warn",
+    "@typescript-eslint/strict-boolean-expressions": "warn"
   },
 
   "overrides": [
     {
       "files": ["./src/**/*.test.ts"],
       "plugins": ["jest"],
-      "extends": ["plugin:jest/recommended", "plugin:jest/style"],
-      "rules": {
-        "jest/consistent-test-it": ["warn", { "fn": "test" }],
-        "jest/no-conditional-in-test": "warn",
-        "jest/no-duplicate-hooks": "warn",
-        "jest/no-test-return-statement": "warn",
-        "jest/prefer-comparison-matcher": "warn",
-        "jest/prefer-each": "warn",
-        "jest/prefer-equality-matcher": "warn",
-        "jest/prefer-expect-assertions": [
-          "warn",
-          {
-            "onlyFunctionsWithAsyncKeyword": true,
-            "onlyFunctionsWithExpectInLoop": true,
-            "onlyFunctionsWithExpectInCallback": true
-          }
-        ],
-        "jest/prefer-expect-resolves": "warn",
-        "jest/prefer-hooks-in-order": "warn",
-        "jest/prefer-hooks-on-top": "warn",
-        "jest/prefer-mock-promise-shorthand": "warn",
-        "jest/prefer-spy-on": "warn",
-        "jest/prefer-strict-equal": "warn",
-        "jest/prefer-todo": "warn",
-        "jest/require-hook": "warn",
-        "jest/require-to-throw-message": "warn",
-        "jest/require-top-level-describe": "warn",
-        "jest/unbound-method": "warn"
-      }
+      "extends": ["plugin:jest/recommended", "plugin:jest/style"]
     }
   ]
 }
