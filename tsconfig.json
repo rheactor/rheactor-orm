@@ -28,9 +28,9 @@
     "strict": true,
     "target": "ES2022",
 
-    "paths": { "@/*": ["./src/*"] }
+    "paths": { "@/*": ["./src/*"], "@Tests/*": ["./tests/*"] }
   },
 
-  "include": ["./.env.d.ts", "./src/**/*.ts"],
+  "include": ["./.env.d.ts", "./src/**/*.ts", "./tests/**/*.ts"],
   "exclude": ["./dist"]
 }

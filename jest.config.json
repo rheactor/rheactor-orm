@@ -1,4 +1,7 @@
 {
-  "moduleNameMapper": { "^@/(.*)$": "<rootDir>/src/$1" },
+  "moduleNameMapper": {
+    "^@/(.*)$": "<rootDir>/src/$1",
+    "^@Tests/(.*)$": "<rootDir>/tests/$1"
+  },
   "setupFiles": ["dotenv/config"]
 }
