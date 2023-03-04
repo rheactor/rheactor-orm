@@ -1,0 +1,1 @@
+export class DatabaseBase{connection;async query(e,n){return this.connection.query(e,n)}async execute(e,n){return this.connection.query(e,n)}}

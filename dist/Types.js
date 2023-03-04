@@ -1,0 +1,1 @@
+export const isScalar=o=>"string"==typeof o||"number"==typeof o||"boolean"==typeof o||"bigint"==typeof o;export const isScalarNullable=o=>null==o||isScalar(o);

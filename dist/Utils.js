@@ -1,0 +1,1 @@
+let t=(t,e=2)=>t.toString().padStart(e,"0");export const getDatetimeISO=e=>`${e.getFullYear()}-${t(e.getMonth()+1)}-${t(e.getDate())}T${t(e.getHours())}:${t(e.getMinutes())}:${t(e.getSeconds())}.${t(e.getMilliseconds(),3)}Z`;

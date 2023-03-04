@@ -1,0 +1,1 @@
+export class Expression{expression;static NULL=new Expression("NULL");static NOW=new Expression("NOW()");constructor(s){this.expression=s}}

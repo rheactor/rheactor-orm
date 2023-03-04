@@ -1,0 +1,1 @@
+import{DatabaseBase as e}from"./DatabaseBase";export class DatabaseConnection extends e{connection;constructor(e){super(),this.connection=e}release(){this.connection.release()}}
