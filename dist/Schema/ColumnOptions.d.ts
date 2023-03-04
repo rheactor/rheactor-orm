@@ -7,10 +7,12 @@ export interface All {
     nullable?: boolean;
     /** Column default value. */
     default?: Expression | boolean | number | string;
-    /** Column ON UPDATE expression. */
-    onUpdate?: Expression;
+    /** Column ON UPDATE NOW() expression. */
+    onUpdateNow?: boolean;
     /** Column is UNSIGNED. */
     unsigned?: boolean;
+    /** Apply zero padding to numeric columns. */
+    zerofill?: boolean;
     /**
      * Column length,
      * @example VARCHAR(255) => 255
@@ -51,21 +53,19 @@ export interface All {
     primaryKey?: boolean;
     /** Column is AUTO_INCREMENT. */
     autoIncrement?: boolean;
-    /**
-     * Column must be invisible to `SELECT *`.
-     * Default is `false`.
-     */
+    /** Column must be invisible to `SELECT *`. Default is `false`. */
     invisible?: boolean;
     /** Column comment. */
     comment?: string;
 }
 export type Basic = Pick<All, "comment" | "invisible">;
-export type Keys = Pick<All, "key" | "uniqueKey">;
-export type General = Basic & Keys & Pick<All, "default" | "invisible" | "nullable">;
+export type General = Basic & Pick<All, "default" | "invisible" | "key" | "nullable" | "uniqueKey">;
 export type Unsigned = Pick<All, "unsigned">;
+export type Zerofill = Pick<All, "zerofill">;
 export type Bits = Pick<All, "bits">;
-export type Precision = Pick<All, "precision" | "scale">;
+export type Precision = Pick<All, "precision">;
+export type Scale = Pick<All, "scale">;
 export type Collate = Pick<All, "collate">;
 export type Length = Pick<All, "length">;
 export type Options = Pick<All, "options">;
-export type Temporal = Pick<All, "microsecondPrecision" | "onUpdate">;
+export type Temporal = Pick<All, "microsecondPrecision" | "onUpdateNow">;

@@ -79,11 +79,8 @@ export interface All {
 
 export type Basic = Pick<All, "comment" | "invisible">;
 
-export type Keys = Pick<All, "key" | "uniqueKey">;
-
 export type General = Basic &
-  Keys &
-  Pick<All, "default" | "invisible" | "nullable">;
+  Pick<All, "default" | "invisible" | "key" | "nullable" | "uniqueKey">;
 
 export type Unsigned = Pick<All, "unsigned">;
 
@@ -91,7 +88,9 @@ export type Zerofill = Pick<All, "zerofill">;
 
 export type Bits = Pick<All, "bits">;
 
-export type Precision = Pick<All, "precision" | "scale">;
+export type Precision = Pick<All, "precision">;
+
+export type Scale = Pick<All, "scale">;
 
 export type Collate = Pick<All, "collate">;
 

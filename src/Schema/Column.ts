@@ -50,10 +50,14 @@ export class Column<T extends ColumnOptions.All = ColumnOptions.All> {
       | ColumnType.SMALLINT
       | ColumnType.TINYINT,
     options?: ColumnOptions.General &
+      ColumnOptions.Precision &
       ColumnOptions.Unsigned &
       ColumnOptions.Zerofill
   ): Column<
-    ColumnOptions.General & ColumnOptions.Unsigned & ColumnOptions.Zerofill
+    ColumnOptions.General &
+      ColumnOptions.Precision &
+      ColumnOptions.Unsigned &
+      ColumnOptions.Zerofill
   >;
 
   public static create(
@@ -67,11 +71,13 @@ export class Column<T extends ColumnOptions.All = ColumnOptions.All> {
     type: ColumnType.DECIMAL,
     options?: ColumnOptions.General &
       ColumnOptions.Precision &
+      ColumnOptions.Scale &
       ColumnOptions.Unsigned &
       ColumnOptions.Zerofill
   ): Column<
     ColumnOptions.General &
       ColumnOptions.Precision &
+      ColumnOptions.Scale &
       ColumnOptions.Unsigned &
       ColumnOptions.Zerofill
   >;
@@ -206,6 +212,18 @@ export class Column<T extends ColumnOptions.All = ColumnOptions.All> {
 
       case ColumnType.BIGPK:
         return ColumnType.BIGINT;
+
+      case ColumnType.INT:
+      case ColumnType.TINYINT:
+      case ColumnType.SMALLINT:
+      case ColumnType.MEDIUMINT:
+      case ColumnType.BIGINT:
+      case ColumnType.FLOAT:
+      case ColumnType.DOUBLE:
+        if (this.options.precision !== undefined) {
+          return `${this.type}(${this.options.precision})`;
+        }
+        break;
 
       case ColumnType.CHAR:
       case ColumnType.VARCHAR:

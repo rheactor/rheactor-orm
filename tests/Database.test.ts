@@ -270,6 +270,11 @@ describe("Database", () => {
 
     // Option "precision".
     [
+      Column.create("id", ColumnType.TINYINT, { precision: 10 }),
+      "`id` TINYINT(10) DEFAULT NULL",
+      "`id` tinyint(10) DEFAULT NULL",
+    ],
+    [
       Column.create("id", ColumnType.DECIMAL, { precision: 0 }),
       "`id` DECIMAL DEFAULT NULL",
       "`id` decimal(10,0) DEFAULT NULL",
@@ -371,9 +376,10 @@ describe("Database", () => {
         nullable: false,
         unsigned: true,
         zerofill: true,
+        precision: 5,
       }),
-      "`id` TINYINT UNSIGNED ZEROFILL NOT NULL INVISIBLE DEFAULT 0",
-      "`id` tinyint(3) unsigned zerofill NOT NULL INVISIBLE DEFAULT 000",
+      "`id` TINYINT(5) UNSIGNED ZEROFILL NOT NULL INVISIBLE DEFAULT 0",
+      "`id` tinyint(5) unsigned zerofill NOT NULL INVISIBLE DEFAULT 00000",
     ],
     [
       Column.create("id", ColumnType.BLOB, {
