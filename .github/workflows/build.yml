@@ -31,8 +31,7 @@ jobs:
     strategy:
       matrix:
         databases:
-          - mariadb:10.10
-          - mariadb:10.6
+          - mariadb:10.11
 
     services:
       mariadb:
@@ -40,10 +39,10 @@ jobs:
         ports:
           - 3306:3306
         env:
-          MYSQL_ROOT_PASSWORD: password
-          MYSQL_USER: user
-          MYSQL_PASSWORD: password
-          MYSQL_DATABASE: test
+          MARIADB_ROOT_PASSWORD: password
+          MARIADB_USER: user
+          MARIADB_PASSWORD: password
+          MARIADB_DATABASE: test
         options: >-
           --health-cmd="mysqladmin ping"
           --health-interval=10s
