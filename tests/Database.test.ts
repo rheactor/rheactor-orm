@@ -254,6 +254,13 @@ describe("Database", () => {
       "`id` tinyint(3) unsigned DEFAULT NULL",
     ],
 
+    // Option "zerofill".
+    [
+      Column.create("id", ColumnType.TINYINT, { zerofill: true }),
+      "`id` TINYINT ZEROFILL DEFAULT NULL",
+      "`id` tinyint(3) unsigned zerofill DEFAULT NULL",
+    ],
+
     // Option "length".
     [
       Column.create("id", ColumnType.VARCHAR, { length: 20 }),
@@ -363,9 +370,10 @@ describe("Database", () => {
         invisible: true,
         nullable: false,
         unsigned: true,
+        zerofill: true,
       }),
-      "`id` TINYINT UNSIGNED NOT NULL INVISIBLE DEFAULT 0",
-      "`id` tinyint(3) unsigned NOT NULL INVISIBLE DEFAULT 0",
+      "`id` TINYINT UNSIGNED ZEROFILL NOT NULL INVISIBLE DEFAULT 0",
+      "`id` tinyint(3) unsigned zerofill NOT NULL INVISIBLE DEFAULT 000",
     ],
     [
       Column.create("id", ColumnType.BLOB, {

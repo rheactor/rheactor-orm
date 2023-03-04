@@ -49,8 +49,12 @@ export class Column<T extends ColumnOptions.All = ColumnOptions.All> {
       | ColumnType.MEDIUMINT
       | ColumnType.SMALLINT
       | ColumnType.TINYINT,
-    options?: ColumnOptions.General & ColumnOptions.Unsigned
-  ): Column<ColumnOptions.General & ColumnOptions.Unsigned>;
+    options?: ColumnOptions.General &
+      ColumnOptions.Unsigned &
+      ColumnOptions.Zerofill
+  ): Column<
+    ColumnOptions.General & ColumnOptions.Unsigned & ColumnOptions.Zerofill
+  >;
 
   public static create(
     name: string,
@@ -63,9 +67,13 @@ export class Column<T extends ColumnOptions.All = ColumnOptions.All> {
     type: ColumnType.DECIMAL,
     options?: ColumnOptions.General &
       ColumnOptions.Precision &
-      ColumnOptions.Unsigned
+      ColumnOptions.Unsigned &
+      ColumnOptions.Zerofill
   ): Column<
-    ColumnOptions.General & ColumnOptions.Precision & ColumnOptions.Unsigned
+    ColumnOptions.General &
+      ColumnOptions.Precision &
+      ColumnOptions.Unsigned &
+      ColumnOptions.Zerofill
   >;
 
   public static create(
@@ -140,6 +148,10 @@ export class Column<T extends ColumnOptions.All = ColumnOptions.All> {
 
     if (this.options.unsigned === true) {
       components.push("UNSIGNED");
+    }
+
+    if (this.options.zerofill === true) {
+      components.push("ZEROFILL");
     }
 
     if (this.options.collate !== undefined) {

@@ -16,6 +16,9 @@ export interface All {
   /** Column is UNSIGNED. */
   unsigned?: boolean;
 
+  /** Apply zero padding to numeric columns. */
+  zerofill?: boolean;
+
   /**
    * Column length,
    * @example VARCHAR(255) => 255
@@ -67,10 +70,7 @@ export interface All {
   /** Column is AUTO_INCREMENT. */
   autoIncrement?: boolean;
 
-  /**
-   * Column must be invisible to `SELECT *`.
-   * Default is `false`.
-   */
+  /** Column must be invisible to `SELECT *`. Default is `false`. */
   invisible?: boolean;
 
   /** Column comment. */
@@ -86,6 +86,8 @@ export type General = Basic &
   Pick<All, "default" | "invisible" | "nullable">;
 
 export type Unsigned = Pick<All, "unsigned">;
+
+export type Zerofill = Pick<All, "zerofill">;
 
 export type Bits = Pick<All, "bits">;
 
