@@ -62,3 +62,9 @@ jobs:
           TESTING_DATABASE: test
           TESTING_USER: user
           TESTING_PASSWORD: password
+
+      - run: npm run test:build
+        env:
+          TESTING_DATABASE: test
+          TESTING_USER: user
+          TESTING_PASSWORD: password

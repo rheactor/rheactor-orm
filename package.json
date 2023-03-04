@@ -5,13 +5,14 @@
   "license": "Apache License 2.0",
   "scripts": {
     "dev": "tsc --watch",
-    "build": "rimraf dist/ && tsc -project tsconfig.build.json && tsc-alias && swc ./dist -d ./dist",
+    "build": "npm run prettier:fix && npm run eslint:fix && rimraf dist/ && tsc -project tsconfig.build.json && tsc-alias && swc ./dist -d ./dist",
     "ts:unused": "ts-unused-exports ./tsconfig.json --showLineNumber",
     "prettier": "prettier --check ./src",
     "prettier:fix": "prettier --write ./src",
     "eslint": "eslint ./src",
     "eslint:fix": "eslint --fix ./src",
     "test": "jest",
+    "test:build": "npm run build && jest --config ./jest.config.build.ts",
     "test:watch": "jest --watchAll",
     "test:coverage": "jest --coverage --watchAll"
   },
