@@ -10,8 +10,8 @@ export interface All {
   /** Column default value. */
   default?: Expression | boolean | number | string;
 
-  /** Column ON UPDATE expression. */
-  onUpdate?: Expression;
+  /** Column ON UPDATE NOW() expression. */
+  onUpdateNow?: boolean;
 
   /** Column is UNSIGNED. */
   unsigned?: boolean;
@@ -97,4 +97,4 @@ export type Length = Pick<All, "length">;
 
 export type Options = Pick<All, "options">;
 
-export type Temporal = Pick<All, "microsecondPrecision" | "onUpdate">;
+export type Temporal = Pick<All, "microsecondPrecision" | "onUpdateNow">;

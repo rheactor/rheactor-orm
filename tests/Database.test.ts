@@ -237,9 +237,7 @@ describe("Database", () => {
 
     // Option "onUpdate".
     [
-      Column.create("id", ColumnType.DATETIME, {
-        onUpdate: Expression.NOW,
-      }),
+      Column.create("id", ColumnType.DATETIME, { onUpdateNow: true }),
       "`id` DATETIME DEFAULT NULL ON UPDATE NOW()",
       "`id` datetime DEFAULT NULL ON UPDATE current_timestamp()",
     ],
@@ -384,7 +382,7 @@ describe("Database", () => {
         nullable: false,
         invisible: true,
         microsecondPrecision: 3,
-        onUpdate: Expression.NOW,
+        onUpdateNow: true,
       }),
       "`id` TIMESTAMP(3) NOT NULL INVISIBLE DEFAULT NOW() ON UPDATE NOW()",
       "`id` timestamp(3) NOT NULL INVISIBLE DEFAULT current_timestamp(3) ON UPDATE current_timestamp(3)",

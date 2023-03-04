@@ -171,8 +171,8 @@ export class Column<T extends ColumnOptions.All = ColumnOptions.All> {
       }
     }
 
-    if (this.options.onUpdate !== undefined) {
-      components.push(`ON UPDATE ${this.options.onUpdate.expression}`);
+    if (this.options.onUpdateNow === true) {
+      components.push(`ON UPDATE NOW()`);
     }
 
     if (this.options.autoIncrement === true) {
